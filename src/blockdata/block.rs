@@ -236,6 +236,42 @@ mod tests {
     use blockdata::block::{Block, BlockHeader};
     use consensus::encode::{deserialize, serialize};
 
+    #[test]
+    fn should_create_new_block_header_from_constituent_parts() {
+        // NOTE: Test vector == bitcoing mainnet block #605083
+        let expected_bitcoin_hash = sha256d::Hash::from_str(
+            "000000000000000000071b0604c7e29d51b1e8c64d22fb53f21ddb0f685a5c31"
+        ).unwrap();
+        let time: u32 = 1574518961;
+        let bits: u32 = 387297854;
+        let nonce: u32 = 206815602;
+        let version: u32 = 536870912;
+        let merkle_root = sha256d::Hash::from_str(
+            "7d0d017c486f8fbab8d9d1f9e1104856087b84cef2bfa49df1afa11d07ca6e8c"
+        ).unwrap();
+        let prev_blockhash = sha256d::Hash::from_str(
+            "0000000000000000000c814d010966506828dc4946fbcb7da9b8491b5a262fd9"
+        ).unwrap();
+        let block = BlockHeader::new(
+            time,
+            bits,
+            nonce,
+            version,
+            merkle_root,
+            prev_blockhash,
+        );
+        let bitcoin_hash = block.bitcoin_hash();
+        assert!(block.time == time);
+        assert!(block.bits == bits);
+        assert!(block.nonce == nonce);
+        assert!(block.version == version);
+        assert!(block.merkle_root == merkle_root);
+        assert!(bitcoin_hash == expected_bitcoin_hash);
+        assert!(block.prev_blockhash == prev_blockhash);
+        if let Err(_) = block.validate_pow(&block.target()) {
+            panic!("Block not valid!");
+        }
+    }
 
     #[test]
     fn block_test() {
