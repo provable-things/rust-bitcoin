@@ -229,12 +229,12 @@ serde_struct_impl!(Block, header, txdata);
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+    use std::str::FromStr;
+    use util::hash::MerkleRoot;
     use hex::decode as hex_decode;
-
     use blockdata::block::{Block, BlockHeader};
     use consensus::encode::{deserialize, serialize};
-    use util::hash::MerkleRoot;
-
 
 
     #[test]
