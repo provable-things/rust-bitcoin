@@ -27,7 +27,7 @@
 //!   // create a block filter for a block (server side)
 //!
 //!   fn get_script_for_coin (coin: &OutPoint) -> Result<Script, BlockFilterError> {
-//!     // get utxo ...
+//!     // get utxo ..=
 //!   }
 //!
 //!   let filter = BlockFilter::new_script_filter (&block, get_script_for_coin)?;

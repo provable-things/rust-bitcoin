@@ -812,7 +812,7 @@ mod tests {
 
 
     // These test vectors were stolen from libbtc, which is Copyright 2014 Jonas Schnelli MIT
-    // They were transformed by replacing {...} with run_test_sighash(...), then the ones containing
+    // They were transformed by replacing {..=} with run_test_sighash(..=), then the ones containing
     // OP_CODESEPARATOR in their pubkeys were removed
     #[test]
     fn test_sighash() {
