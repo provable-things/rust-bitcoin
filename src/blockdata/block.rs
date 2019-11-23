@@ -62,6 +62,14 @@ pub struct Block {
 }
 
 impl Block {
+    /// Create a new block from constituent parts
+    pub fn new(header: BlockHeader, txdata: Vec<Transaction>) -> Self {
+        Block {
+            header,
+            txdata
+        }
+    }
+
     /// check if merkle root of header matches merkle root of the transaction list
     pub fn check_merkle_root (&self) -> bool {
         self.header.merkle_root == self.merkle_root()
