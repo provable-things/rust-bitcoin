@@ -222,7 +222,7 @@ fn parse_signed_to_satoshi(
 fn fmt_satoshi_in(
     satoshi: u64,
     negative: bool,
-    f: &mut fmt::Write,
+    f: &mut dyn fmt::Write,
     denom: Denomination,
 ) -> fmt::Result {
     if negative {
@@ -370,7 +370,7 @@ impl Amount {
     /// Format the value of this [Amount] in the given denomination.
     ///
     /// Does not include the denomination.
-    pub fn fmt_value_in(&self, f: &mut fmt::Write, denom: Denomination) -> fmt::Result {
+    pub fn fmt_value_in(&self, f: &mut dyn fmt::Write, denom: Denomination) -> fmt::Result {
         fmt_satoshi_in(self.as_sat(), false, f, denom)
     }
 
@@ -667,7 +667,7 @@ impl SignedAmount {
     /// Format the value of this [SignedAmount] in the given denomination.
     ///
     /// Does not include the denomination.
-    pub fn fmt_value_in(&self, f: &mut fmt::Write, denom: Denomination) -> fmt::Result {
+    pub fn fmt_value_in(&self, f: &mut dyn fmt::Write, denom: Denomination) -> fmt::Result {
         fmt_satoshi_in(self.as_sat().abs() as u64, self.is_negative(), f, denom)
     }
 
