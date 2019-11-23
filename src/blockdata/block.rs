@@ -117,6 +117,25 @@ impl MerkleRoot for Block {
 }
 
 impl BlockHeader {
+    /// Create a new block header from constituent parts
+    pub fn new(
+        time: u32,
+        bits: u32,
+        nonce: u32,
+        version: u32,
+        merkle_root: sha256d::Hash,
+        prev_blockhash: sha256d::Hash,
+    ) -> Self {
+        BlockHeader {
+            time,
+            bits,
+            nonce,
+            version,
+            merkle_root,
+            prev_blockhash,
+        }
+    }
+
     /// Computes the target [0, T] that a blockhash must land in to be valid
     pub fn target(&self) -> Uint256 {
         // This is a floating-point "compact" encoding originally used by
@@ -215,6 +234,8 @@ mod tests {
     use blockdata::block::{Block, BlockHeader};
     use consensus::encode::{deserialize, serialize};
     use util::hash::MerkleRoot;
+
+
 
     #[test]
     fn block_test() {
