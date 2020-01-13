@@ -53,6 +53,7 @@ pub extern crate bech32;
 
 extern crate byteorder;
 extern crate hex;
+extern crate scrypt;
 #[cfg(feature = "serde")] extern crate serde;
 #[cfg(all(test, feature = "serde"))] #[macro_use] extern crate serde_derive; // for 1.22.0 compat
 #[cfg(all(test, feature = "serde"))] extern crate serde_json;
