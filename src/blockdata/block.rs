@@ -227,9 +227,12 @@ impl BlockHeader {
                 let mut ret = [0u64; 4];
                 LittleEndian::read_u64_into(&data, &mut ret);
                 let hash = &Uint256(ret);
+                print!("hash: {:?}\n", hash);
+                print!("target: {}\n", target);
                 if hash <= target {
                     Ok(())
                 } else {
+                    print!("error target\n");
                     Err(BlockBadProofOfWork)
                 }
             }
@@ -292,6 +295,25 @@ mod tests {
     use hex::decode as hex_decode;
     use std::str::FromStr;
     use util::hash::MerkleRoot;
+
+    #[test]
+    fn test_scrypt_testnet() {
+        let time: u32 = 1578995708;
+        let bits: u32 = 504101666;
+        let nonce: u32 = 3837827545;
+        let version: u32 = 536870912;
+        let merkle_root = sha256d::Hash::from_str(
+            "e2fb30323fc71f903bb153f59bd222bdb23620eb749b1b5e4ac3e558f1e2274f",
+        )
+        .unwrap();
+        let prev_blockhash = sha256d::Hash::from_str(
+            "9ff792836649d51e75221d59beb5d47c1763ee118d5230b73081d68421df8e20",
+        )
+        .unwrap();
+        let litecoin_header =
+            BlockHeader::new(time, bits, nonce, version, merkle_root, prev_blockhash);
+        litecoin_header.validate_pow(&litecoin_header.target());
+    }
 
     #[test]
     fn test_scrypt() {
