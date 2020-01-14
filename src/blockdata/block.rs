@@ -312,12 +312,14 @@ mod tests {
         .unwrap();
         let litecoin_header =
             BlockHeader::new(time, bits, nonce, version, merkle_root, prev_blockhash);
-        litecoin_header.validate_pow(&litecoin_header.target());
+        match litecoin_header.validate_pow(&litecoin_header.target()) {
+            Ok(_) => assert!(true),
+            Err(_) => assert!(false, "Error in validating the LTC testnet proof of work"),
+        }
     }
 
     #[test]
     fn test_scrypt() {
-        // https://chainz.cryptoid.info/ltc/block.dws?1770654.htm
         let time: u32 = 1578931097;
         let bits: u32 = 436403550;
         let nonce: u32 = 2456562066;
@@ -332,7 +334,10 @@ mod tests {
         .unwrap();
         let litecoin_header =
             BlockHeader::new(time, bits, nonce, version, merkle_root, prev_blockhash);
-        litecoin_header.validate_pow(&litecoin_header.target());
+        match litecoin_header.validate_pow(&litecoin_header.target()) {
+            Ok(_) => assert!(true),
+            Err(_) => assert!(false, "Error in validating the LTC mainnet proof of work"),
+        }
     }
 
     #[test]
