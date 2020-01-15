@@ -227,12 +227,9 @@ impl BlockHeader {
                 let mut ret = [0u64; 4];
                 LittleEndian::read_u64_into(&data, &mut ret);
                 let hash = &Uint256(ret);
-                println!("hash: {:?}\n", hash);
-                println!("target: {}\n", target);
                 if hash <= target {
                     Ok(())
                 } else {
-                    println!("error target\n");
                     Err(BlockBadProofOfWork)
                 }
             }
