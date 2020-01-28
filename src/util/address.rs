@@ -370,7 +370,7 @@ impl Display for Address {
                 let mut prefixed = [0; 21];
                 prefixed[0] = match self.network {
                     Network::Bitcoin => 0,
-                    Network::Testnet | Network::Regtest => 111,
+                    Network::Testnet | Network::Regtest => 140,
                 };
                 prefixed[1..].copy_from_slice(&hash[..]);
                 base58::check_encode_slice_to_fmt(fmt, &prefixed[..])
@@ -379,7 +379,7 @@ impl Display for Address {
                 let mut prefixed = [0; 21];
                 prefixed[0] = match self.network {
                     Network::Bitcoin => 5,
-                    Network::Testnet | Network::Regtest => 196,
+                    Network::Testnet | Network::Regtest => 19,
                 };
                 prefixed[1..].copy_from_slice(&hash[..]);
                 base58::check_encode_slice_to_fmt(fmt, &prefixed[..])
