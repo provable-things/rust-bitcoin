@@ -369,7 +369,7 @@ impl Display for Address {
             Payload::PubkeyHash(ref hash) => {
                 let mut prefixed = [0; 21];
                 prefixed[0] = match self.network {
-                    Network::Bitcoin => 0,
+                    Network::Bitcoin => 48,
                     Network::Testnet | Network::Regtest => 111,
                 };
                 prefixed[1..].copy_from_slice(&hash[..]);
@@ -378,8 +378,8 @@ impl Display for Address {
             Payload::ScriptHash(ref hash) => {
                 let mut prefixed = [0; 21];
                 prefixed[0] = match self.network {
-                    Network::Bitcoin => 5,
-                    Network::Testnet | Network::Regtest => 196,
+                    Network::Bitcoin => 50,
+                    Network::Testnet | Network::Regtest => 58,
                 };
                 prefixed[1..].copy_from_slice(&hash[..]);
                 base58::check_encode_slice_to_fmt(fmt, &prefixed[..])
@@ -468,11 +468,11 @@ impl FromStr for Address {
         }
 
         let (network, payload) = match data[0] {
-            0 => (
+            48 => (
                 Network::Bitcoin,
                 Payload::PubkeyHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
-            5 => (
+            50 => (
                 Network::Bitcoin,
                 Payload::ScriptHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
@@ -480,7 +480,7 @@ impl FromStr for Address {
                 Network::Testnet,
                 Payload::PubkeyHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
-            196 => (
+            58 => (
                 Network::Testnet,
                 Payload::ScriptHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
