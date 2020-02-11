@@ -369,7 +369,7 @@ impl Display for Address {
             Payload::PubkeyHash(ref hash) => {
                 let mut prefixed = [0; 21];
                 prefixed[0] = match self.network {
-                    Network::Bitcoin => 0,
+                    Network::Bitcoin => 76,
                     Network::Testnet | Network::Regtest => 140,
                 };
                 prefixed[1..].copy_from_slice(&hash[..]);
@@ -378,7 +378,7 @@ impl Display for Address {
             Payload::ScriptHash(ref hash) => {
                 let mut prefixed = [0; 21];
                 prefixed[0] = match self.network {
-                    Network::Bitcoin => 5,
+                    Network::Bitcoin => 16,
                     Network::Testnet | Network::Regtest => 19,
                 };
                 prefixed[1..].copy_from_slice(&hash[..]);
