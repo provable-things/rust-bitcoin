@@ -535,9 +535,12 @@ impl Decodable for Transaction {
                     }
                 }
                 // We don't support anything else
-                x => {
-                    Err(encode::Error::UnsupportedSegwitFlag(x))
-                }
+                x => Ok(Transaction {
+                        version: version,
+                        input: input,
+                        output: Decodable::consensus_decode(&mut d)?,
+                        lock_time: Decodable::consensus_decode(d)?,
+                    })
             }
         // non-segwit
         } else {

@@ -197,12 +197,10 @@ pub fn serialize_hex<T: Encodable + ?Sized>(data: &T) -> String {
 pub fn deserialize<'a, T: Decodable>(data: &'a [u8]) -> Result<T, Error> {
     let (rv, consumed) = deserialize_partial(data)?;
 
-    // Fail if data are not consumed entirely.
-    if consumed == data.len() {
-        Ok(rv)
-    } else {
-        Err(Error::ParseFailed("data not consumed entirely when explicitly deserializing"))
-    }
+    // Return as we do not care about the payload,
+    // check here the raw transaction format:
+    // https://dash-docs.github.io/en/developer-reference#raw-transaction-format
+    Ok(rv)
 }
 
 /// Deserialize an object from a vector, but will not report an error if said deserialization
