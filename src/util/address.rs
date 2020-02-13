@@ -468,19 +468,19 @@ impl FromStr for Address {
         }
 
         let (network, payload) = match data[0] {
-            0 => (
+            76 => (
                 Network::Bitcoin,
                 Payload::PubkeyHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
-            5 => (
+            16 => (
                 Network::Bitcoin,
                 Payload::ScriptHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
-            111 => (
+            140 => (
                 Network::Testnet,
                 Payload::PubkeyHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
-            196 => (
+            19 => (
                 Network::Testnet,
                 Payload::ScriptHash(hash160::Hash::from_slice(&data[1..]).unwrap()),
             ),
