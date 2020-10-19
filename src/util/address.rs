@@ -418,8 +418,8 @@ impl FromStr for Address {
         // try bech32
         let bech32_network = match find_bech32_prefix(s) {
             // note that upper or lowercase is allowed but NOT mixed case
-            "bc" | "BC" => Some(Network::Bitcoin),
-            "tb" | "TB" => Some(Network::Testnet),
+            "ltc" | "LTC" => Some(Network::Bitcoin),
+            "tltc" | "TLTC" => Some(Network::Testnet),
             "bcrt" | "BCRT" => Some(Network::Regtest),
             _ => None,
         };
